@@ -488,6 +488,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '400',
+    color: 'gray',
     position: 'absolute',
     bottom: 10,
   },
