@@ -1,118 +1,105 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// NavigationContainer
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+import BasicDetail from './Context/ProvideBasic';
+import Login from './Components/Login';
+import Home from './Components/Home';
+import {Provider} from 'react-redux';
+import Profile from './Components/Profile';
+import {Listing} from './Components/Listing';
+import {store} from './app/sotre';
+import InputProfile from './Components/InputProfile';
+import Testing from './Components/Test';
+import Payment from './Components/payment';
+import Input from './BasicComponent/Input';
+import InputPaymentProfile from './Components/InnputPayment';
+// 9122036829
+const stack = createNativeStackNavigator();
+function App(): JSX.Element {
+  // return ;
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <BasicDetail>
+      <NavigationContainer>
+        <Provider store={store}>
+          <stack.Navigator>
+            <stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: 'white',
+                },
+              }}
+            />
+
+            <stack.Screen
+              name="Listing"
+              options={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: 'white',
+                },
+              }}
+              component={Listing}
+            />
+            <stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: '#F1F5F9',
+                },
+              }}
+            />
+
+            <stack.Screen
+              name="Edit Profile"
+              component={InputProfile}
+              initialParams={{data: {fmob: ''}}}
+              options={{
+                headerStyle: {
+                  backgroundColor: 'white',
+                },
+              }}
+            />
+            <stack.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: 'white',
+                },
+              }}
+            />
+            <stack.Screen
+              name="Fee Payment Profile"
+              component={Payment}
+              // options={{
+              //     headerShown: false,
+              //     headerStyle: {
+              //         backgroundColor: "white",
+              //     },
+              // }}
+            />
+            <stack.Screen
+              name="Select Month"
+              component={InputPaymentProfile}
+              // options={{
+              //     headerShown: false,
+              //     headerStyle: {
+              //         backgroundColor: "white",
+              //     },
+              // }}
+            />
+          </stack.Navigator>
+        </Provider>
+      </NavigationContainer>
+    </BasicDetail>
   );
 }
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
