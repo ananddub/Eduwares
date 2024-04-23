@@ -1,5 +1,5 @@
 import * as Font from 'expo-font';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
     View,
     Image,
@@ -15,7 +15,7 @@ import ProfileInputTable from '../BasicComponent/ProfileInput';
 import {Svg, Path} from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import {ProfileEditable} from '../Context/Class';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {URL} from '../Context/Address';
 import {dataSelector} from '../app/Data/userValue';
 import {useAppSelector} from '../app/hooks';
@@ -62,15 +62,13 @@ function Profile() {
         console.log('Reloaded successfully');
     }, [reload]);
 
-    useEffect(() => {
-        const unsubscribe = navigator.addListener('focus', () => {
-            setTimeout(() => {
-                console.log('reloading');
-                setFetchData(userData?.userData.tbl_admission);
-            }, 500);
-        });
-        return unsubscribe;
-    }, [navigator]);
+    useFocusEffect(
+        useCallback(() => {
+            console.log('reloaded me');
+            setTimeout(() => {});
+            setFetchData(userData.userData.tbl_admission);
+        }, []),
+    );
 
     const handlePressIn = () => {
         console.log('commed in');
